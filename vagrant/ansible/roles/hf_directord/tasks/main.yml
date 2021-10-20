@@ -1,0 +1,2 @@
+- name: install prereqs
+  ansible.builtin.include: prereqs.yml

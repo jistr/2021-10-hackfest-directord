@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+if ! virsh pool-list | grep vagrant &> /dev/null; then
+    virsh pool-create-as vagrant dir --target $HOME/.local/share/libvirt/vagrant
+fi
+
+if ! virsh net-list | grep hf_directord &> /dev/null; then
+    virsh net-define hf_directord_net.xml
+    virsh net-autostart hf_directord
+    virsh net-start hf_directord
+fi
+
+if ! vagrant box list | grep CentosStream8 &> /dev/null; then
+    vagrant box add --name CentosStream8 https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-Vagrant-8-20210603.0.x86_64.vagrant-libvirt.box
+fi
+
+vagrant up

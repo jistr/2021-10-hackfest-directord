@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+virsh snapshot-create-as --atomic --domain hf_directord_node0 --name "${1:-clean}"
+virsh snapshot-create-as --atomic --domain hf_directord_node1 --name "${1:-clean}"

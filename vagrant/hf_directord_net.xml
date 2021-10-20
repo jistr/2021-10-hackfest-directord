@@ -1,0 +1,4 @@
+<network ipv6='yes'>
+  <name>hf_directord</name>
+  <bridge name='hf_directord' stp='on' delay='0' />
+</network>

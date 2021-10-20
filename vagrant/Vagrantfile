@@ -1,0 +1,69 @@
+require 'yaml'
+
+Vagrant.require_version ">= 1.6.2"
+
+# === Vagrant config ===
+
+Vagrant.configure("2") do |config|
+
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder './vagrant-sync', '/vagrant-sync', type: 'rsync'
+
+  config.vm.provider :libvirt do |libvirt, override|
+    libvirt.driver = 'kvm'
+    libvirt.connect_via_ssh = false
+    libvirt.username = 'root'
+    libvirt.default_prefix = "hf_directord_"
+    libvirt.storage_pool_name = "vagrant"
+    libvirt.qemu_use_session = true
+    libvirt.uri = "qemu:///session"
+    libvirt.system_uri = "qemu:///system"
+    libvirt.storage_pool_path = "~/.local/share/libvirt/images"
+    libvirt.management_network_device = "virbr0"
+
+    override.vm.box = "CentosStream8"
+    override.vm.provider :libvirt do |vm_libvirt|
+      libvirt.suspend_mode = "managedsave"
+    end
+  end
+
+  config.vm.define 'node0' do |vm_config|
+    vm_config.vm.hostname = 'node0'
+    # vm_config.vm.network :public_network, :dev => "virbr0", :mode => "bridge", :type => "bridge"
+    vm_config.vm.network :private_network, libvirt__dhcp_enabled: false, libvirt__network_name: "hf_directord"
+
+    vm_config.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 8192
+      libvirt.cpus = 4
+    end
+
+    vm_config.vm.provision "shell", inline: "/vagrant-sync/preconfigure.sh"
+    vm_config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "ansible/configure.yml"
+    end
+
+    vm_config.trigger.after :up do |trigger|
+      trigger.run = { :path => "triggers/after_up.sh" }
+    end
+  end
+
+  config.vm.define 'node1' do |vm_config|
+    vm_config.vm.hostname = 'node1'
+    # vm_config.vm.network :public_network, :dev => "virbr0", :mode => "bridge", :type => "bridge"
+    vm_config.vm.network :private_network, libvirt__dhcp_enabled: false, libvirt__network_name: "hf_directord"
+
+    vm_config.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 8192
+      libvirt.cpus = 4
+    end
+
+    vm_config.vm.provision "shell", inline: "/vagrant-sync/preconfigure.sh"
+    vm_config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "ansible/configure.yml"
+    end
+
+    vm_config.trigger.after :up do |trigger|
+      trigger.run = { :path => "triggers/after_up.sh" }
+    end
+  end
+end
