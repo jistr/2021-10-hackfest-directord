@@ -107,3 +107,5 @@ ssh -F env/ssh-config node0 'ssh -o StrictHostKeyChecking=no node1 true'
 ssh -F env/ssh-config node1 'ssh -o StrictHostKeyChecking=no node0 true'
 ssh -F env/ssh-config node1 'ssh -o StrictHostKeyChecking=no node1 true'
 ```
+
+Alternative approach that does not need generating a new key: [https://gist.github.com/philroche/546eee987105a5e0cf11e6718db918ab](https://gist.github.com/philroche/546eee987105a5e0cf11e6718db918ab).
