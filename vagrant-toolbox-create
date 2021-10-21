@@ -8,6 +8,14 @@ if [ -e /.os-migrate-toolbox ]; then
     exit 1
 fi
 
+if [ $(id -u) != 0 ]; then
+   echo "ERROR: This must be run as root."
+   echo "Due to Vagrant-libvirt permissions issues it is necessary "
+   echo "to run Vagrant as root, to give it permissions for creating "
+   echo "libvirt networks."
+   exit 1
+fi
+
 DIR=$(dirname $(realpath $0))
 PROJECT_DIR=$(realpath "$DIR")
 if [ -t 1 ]; then

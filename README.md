@@ -1,22 +1,22 @@
 Vagrant-libvirt environment for directord hackfest
 ==================================================
 
-Note: Due to permissions issues Vagrant/Libvirt can only create the
+**Note: Due to permissions issues Vagrant/Libvirt can only create the
 additional private network when running as root. It is recommended to
-execute the Vagrant environment on some lab machine as root.
+execute the Vagrant environment on some lab machine as root.**
 
-Note2: If you have Vagrant installed locally, you don't have to use
+**Note2**: If you have Vagrant installed locally, you don't have to use
 the toolbox container, you can simply skip to `cd vagrant;
 ./vagrant-up`. However, if your lab machine is running CentOS, it
 likely doesn't have Vagrant-libvirt easily installable (it doesn't
 ship with the distro or with EPEL). That's when the toolbox container
 comes in handy.
 
-Note3: This tool was prepared in half a day by amending the Vagrant
+**Note3**: This tool was prepared in half a day by amending the Vagrant
 setup we have for OS Migrate. Please adjust your expectations
 accordingly. :)
 
-Note4: If you are not familiar with Vagrant, you may want to look at
+**Note4**: If you are not familiar with Vagrant, you may want to look at
 [Vagrant docs](https://www.vagrantup.com/docs/cli).
 
 Starting the toolbox container
