@@ -16,6 +16,9 @@ Note3: This tool was prepared in half a day by amending the Vagrant
 setup we have for OS Migrate. Please adjust your expectations
 accordingly. :)
 
+Note4: If you are not familiar with Vagrant, you may want to look at
+[Vagrant docs](https://www.vagrantup.com/docs/cli).
+
 Starting the toolbox container
 ------------------------------
 
