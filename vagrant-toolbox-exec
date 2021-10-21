@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+CONTAINER_NAME=hf_directord_vagrant
+
+sudo podman exec -ti \
+    --detach-keys='ctrl-^' \
+    $CONTAINER_NAME \
+    bash
+
