@@ -81,3 +81,29 @@ To delete snapshots:
 ```
 ./vagrant-snapshot-delete [snapshot name]
 ```
+
+Some initial setup beyond Vagrant
+---------------------------------
+
+Mutual ssh between node0 and node1:
+
+```
+# cd vagrant
+
+ssh-keygen -N '' -b 4096 -f env/hackfest_id_rsa -C hackfest_id_rsa
+
+cat env/hackfest_id_rsa.pub | ssh -F env/ssh-config node0 'tee -a ~/.ssh/authorized_keys'
+cat env/hackfest_id_rsa.pub | ssh -F env/ssh-config node1 'tee -a ~/.ssh/authorized_keys'
+
+cat env/hackfest_id_rsa | ssh -F env/ssh-config node0 'tee ~/.ssh/id_rsa' > /dev/null
+cat env/hackfest_id_rsa | ssh -F env/ssh-config node1 'tee ~/.ssh/id_rsa' > /dev/null
+
+ssh -F env/ssh-config node0 'chmod 0600 ~/.ssh/id_rsa'
+ssh -F env/ssh-config node1 'chmod 0600 ~/.ssh/id_rsa'
+
+# populate known-hosts
+ssh -F env/ssh-config node0 'ssh -o StrictHostKeyChecking=no node0 true'
+ssh -F env/ssh-config node0 'ssh -o StrictHostKeyChecking=no node1 true'
+ssh -F env/ssh-config node1 'ssh -o StrictHostKeyChecking=no node0 true'
+ssh -F env/ssh-config node1 'ssh -o StrictHostKeyChecking=no node1 true'
+```
