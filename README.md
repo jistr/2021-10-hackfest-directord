@@ -29,6 +29,10 @@ into it and run:
 This will start a containerized bash session with Vagrant
 available.
 
+It may be a good idea to `dnf -y install tmux` and run `tmux` within
+the toolbox bash session, to get easily multiple shells within the
+container.
+
 After closing the session, the toolbox container remains running. To
 start another bash session within the existing container, run:
 
