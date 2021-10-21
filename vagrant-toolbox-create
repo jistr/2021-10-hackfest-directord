@@ -72,8 +72,6 @@ sudo podman create \
     -e LC_ALL=C.UTF-8 \
     -e HOME="$HOME" \
     -e SHELL="$SHELL" \
-    -e XDG_DATA_DIRS="$XDG_DATA_DIRS" \
-    -e XDG_MENU_PREFIX="${XDG_MENU_PREFIX:-gnome-}" \
     -e XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
     -w "$PROJECT_DIR/vagrant" \
     ${VAGRANT_TOOLBOX_ARGS:-} \
